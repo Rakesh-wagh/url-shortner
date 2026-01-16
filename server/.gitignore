@@ -1,0 +1,62 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.env/
+.venv/
+ENV/
+
+# FastAPI / Uvicorn logs
+*.log
+
+# Unit test / coverage reports
+.coverage
+htmlcov/
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+.pytest_cache/
+
+# MyPy / type checker
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pydantic / FastAPI generated files
+*.db
+*.sqlite3
+
+# IDE / editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.*
+
+# Build / distribution
+build/
+dist/
+*.egg-info/
+.eggs/
+MANIFEST
+
+# Docker
+*.pid
+*.seed
+*.pid.lock

@@ -1,0 +1,18 @@
+.navbar-brand img {
+  vertical-align: middle;
+}
+
+.navbar {
+  border-bottom: 1px solid #e3e3e3;
+  background: #fff;
+}
+
+.navbar .btn-outline-danger {
+  border-radius: 20px;
+  padding: 4px 18px;
+  font-size: 0.97rem;
+}
+
+.navbar .fw-semibold {
+  font-weight: 500;
+}
