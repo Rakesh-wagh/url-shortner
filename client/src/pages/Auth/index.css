@@ -1,90 +1,90 @@
 .login-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 32px 24px 24px 24px;
-    border: 1px solid #e3e3e3;
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-    background: #fff;
+  width: 100%;
+  max-width: 400px;
+  padding: 32px 24px 24px 24px;
+  border: 1px solid #e3e3e3;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  background: #fff;
 }
 
 .login-container h2 {
-    text-align: center;
-    margin-bottom: 24px;
-    font-weight: 600;
-    color: #222;
+  text-align: center;
+  margin-bottom: 24px;
+  font-weight: 600;
+  color: #222;
 }
 
 .login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .form-group {
-    margin-bottom: 18px;
+  margin-bottom: 18px;
 }
 
 .form-label {
-    font-weight: 500;
-    margin-bottom: 6px;
-    color: #333;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
 }
 
 .form-control {
-    padding: 10px 12px;
-    border: 1px solid #bdbdbd;
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: border-color 0.2s;
+  padding: 10px 12px;
+  border: 1px solid #bdbdbd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
 }
 
 .form-control:focus {
-    border-color: #007bff;
-    outline: none;
+  border-color: #007bff;
+  outline: none;
 }
 
 .btn {
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 6px;
-    font-weight: 500;
-    transition: background 0.2s;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.2s;
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border: none;
+  background-color: #007bff;
+  border: none;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .btn-success {
-    background-color: #28a745;
-    border: none;
+  background-color: #28a745;
+  border: none;
 }
 
 .btn-success:hover {
-    background-color: #218838;
+  background-color: #218838;
 }
 
 .alert {
-    margin-top: 10px;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 0.97rem;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.97rem;
 }
 
 .alert-danger {
-    background: #ffeaea;
-    color: #d8000c;
-    border: 1px solid #f5c6cb;
+  background: #ffeaea;
+  color: #d8000c;
+  border: 1px solid #f5c6cb;
 }
 
 .alert-success {
-    background: #eaffea;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+  background: #eaffea;
+  color: #155724;
+  border: 1px solid #c3e6cb;
 }

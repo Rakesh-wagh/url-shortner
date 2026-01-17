@@ -14,6 +14,7 @@ router = APIRouter(prefix="/urls", tags=["URL shortner api's"])
 security = HTTPBearer()
 SECRET_KEY = os.getenv("JWT_SECRET") 
 ALGORITHM = os.getenv("JWT_ALGORITHM") 
+SERVER_URL = os.getenv("SERVER_URL")
 
 def get_db():
     db = SessionLocal()
@@ -22,6 +23,18 @@ def get_db():
     finally:
         db.close()
 
+@router.get("/me", response_model=schemas.LoggedInUser)
+def get_loggedIn_user(credentials: HTTPAuthorizationCredentials = Depends(security)): 
+    token = credentials.credentials 
+    try: 
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM]) 
+        username: str = payload.get("sub") 
+        if username is None: 
+            raise HTTPException(status_code=401, detail="Invalid token") 
+        return schemas.LoggedInUser(username=username) 
+    except JWTError: 
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
 def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)): 
     token = credentials.credentials 
     try: 
@@ -29,7 +42,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
         username: str = payload.get("sub") 
         if username is None: 
             raise HTTPException(status_code=401, detail="Invalid token") 
-        return username 
+        return username
     except JWTError: 
         raise HTTPException(status_code=401, detail="Invalid token")
 
@@ -107,7 +120,7 @@ def generate_qr(data: dict, db: Session = Depends(get_db), current_user: str = D
         db.commit()
         db.refresh(db_url)
 
-    img = qrcode.make(f"http://127.0.0.1:8080/urls/{db_url.short_code}")
+    img = qrcode.make(f"{SERVER_URL}/urls/{db_url.short_code}")
     buf = io.BytesIO()
     img.save(buf, format="PNG")
     buf.seek(0)

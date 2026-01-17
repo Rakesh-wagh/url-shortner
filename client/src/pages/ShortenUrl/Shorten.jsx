@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import API from '../../api/api';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import API from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const Shorten = () => {
   const navigate = useNavigate();
@@ -15,10 +15,10 @@ const Shorten = () => {
         custom_code: e.target.customCode.value || undefined,
       });
       if (response.status === 200) {
-        navigate('/urls');
+        navigate("/urls");
       }
     } catch (err) {
-      alert('Failed to create short URL');
+      alert("Failed to create short URL");
     } finally {
       setLoading(false);
     }
@@ -60,7 +60,8 @@ const Shorten = () => {
           </div>
 
           <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? 'Creating...' : 'Get your Short Link'} <span className="ms-2">&rarr;</span>
+            {loading ? "Creating..." : "Get your Short Link"}{" "}
+            <span className="ms-2">&rarr;</span>
           </button>
         </form>
       </div>

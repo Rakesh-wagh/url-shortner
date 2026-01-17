@@ -16,6 +16,12 @@ class UserLogin(BaseModel):
     class Config:
             orm_mode = True
 
+class LoggedInUser(BaseModel):
+      username: str
+
+      class Config:
+          orm_mode = True
+
 class UserResponse(BaseModel):
     id: int
     username: str
