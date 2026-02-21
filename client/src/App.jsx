@@ -6,6 +6,7 @@ import Register from "./pages/Auth/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ShortenUrl from "./pages/ShortenUrl/ShortenUrl";
 import UrlList from "./pages/URLList/UrlList";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

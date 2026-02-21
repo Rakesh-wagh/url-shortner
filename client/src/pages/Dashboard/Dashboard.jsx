@@ -1,50 +1,71 @@
+import { Box, Button, Card, CardContent, Grid, Paper, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 
 const Dashboard = () => {
-  const server_url = process.env.Server_URL;
+  const server_url = import.meta.env.VITE_SERVER_URL;
+
   return (
     <>
       <Navbar />
-      <div className="container py-2">
-        <div className="mb-4">
-          <h3 className="">Dashboard</h3>
-          <p className="text-muted">
-            Overview of your shortened URLs and activity
-          </p>
-        </div>
+      <Box sx={{ flexGrow: 1, px: 4, py: 2 }}>
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h5" color="textPrimary">
+            Dashboard
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            Overview of your shortened URLs and activity.
+          </Typography>
+        </Box>
 
-        <div className="row mb-4">
-          <div className="col-md-4">
-            <div className="card text-center shadow-sm">
-              <div className="card-body">
-                <h5 className="card-title">Total Links</h5>
-                <p className="display-6 fw-bold text-primary">50</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div className="card text-center shadow-sm">
-              <div className="card-body">
-                <h5 className="card-title">Clicks</h5>
-                <p className="display-6 fw-bold text-success">254</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div className="card text-center shadow-sm">
-              <div className="card-body">
-                <h5 className="card-title">Active Links</h5>
-                <p className="display-6 fw-bold text-warning">28</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Grid container spacing={3}>
+          <Grid item xs={6} sm={4}>
+            <Card sx={{ boxShadow: 4, borderRadius: 2, p: 1 }}>
+              <CardContent sx={{ textAlign: "center" }}>
+                <Typography variant="h5" color="textPrimary">
+                  Total Links
+                </Typography>
+                <Typography variant="h4" color="primary" sx={{ my: 1 }}>
+                  50
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
 
-        <div className="card shadow-sm mb-4">
-          <div className="card-header fw-bold">Recent Shortened Links</div>
-          <div className="card-body">
+          <Grid item xs={6} sm={4}>
+            <Card sx={{ boxShadow: 4, borderRadius: 2, p: 1 }}>
+              <CardContent sx={{ textAlign: "center" }}>
+                <Typography variant="h5" color="textPrimary" >
+                  Clicks
+                </Typography>
+                <Typography variant="h4" color="success.main" sx={{ my: 1 }}>
+                  254
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item xs={6} sm={4}>
+            <Card sx={{ boxShadow: 4, borderRadius: 2, p: 1 }}>
+              <CardContent sx={{ textAlign: "center" }}>
+                <Typography variant="h5" color="textPrimary">
+                  Active Links
+                </Typography>
+                <Typography variant="h4" color="warning.main" sx={{ my: 1 }}>
+                  28
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+
+        {/* Recent Shortened Links Section */}
+        <Paper sx={{ boxShadow: 6, mt: 4, borderRadius: 2 }}>
+          <Typography variant="h5" sx={{ fontWeight: "bold", p: 2 }}>
+            Recent Shortened Links
+          </Typography>
+          <Box sx={{ p: 2 }}>
             <table className="table table-hover">
               <thead>
                 <tr>
@@ -57,7 +78,14 @@ const Dashboard = () => {
               <tbody>
                 <tr>
                   <td>
-                    <a href="#"> {server_url}/urls/hSMFHe</a>
+                    <Link
+                      to={`${server_url}/urls/hSMFHe`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "#1976d2", textDecoration: "underline" }}
+                    >
+                      {server_url}/urls/hSMFHe
+                    </Link>
                   </td>
                   <td>https://example.com/long-url</td>
                   <td>24</td>
@@ -65,7 +93,14 @@ const Dashboard = () => {
                 </tr>
                 <tr>
                   <td>
-                    <a href="#"> {server_url}/urls/gWcQYH</a>
+                    <Link
+                      to={`${server_url}/urls/gWcQYH`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "#1976d2", textDecoration: "underline" }}
+                    >
+                      {server_url}/urls/gWcQYH
+                    </Link>
                   </td>
                   <td>https://anotherexample.com/page</td>
                   <td>94</td>
@@ -73,7 +108,14 @@ const Dashboard = () => {
                 </tr>
                 <tr>
                   <td>
-                    <a href="#"> {server_url}/urls/pqr456</a>
+                    <Link
+                      to={`${server_url}/urls/pqr456`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "#1976d2", textDecoration: "underline" }}
+                    >
+                      {server_url}/urls/pqr456
+                    </Link>
                   </td>
                   <td>https://mysite.com/blog/article</td>
                   <td>51</td>
@@ -81,21 +123,28 @@ const Dashboard = () => {
                 </tr>
               </tbody>
             </table>
-          </div>
-        </div>
+          </Box>
+        </Paper>
 
-        <div className="card shadow-sm">
-          <div className="card-body text-center">
-            <h5 className="card-title">Ready to shorten a new link?</h5>
-            <p className="text-muted">
-              Generate branded short links and track performance instantly.
-            </p>
-            <Link to="/shorten-url">
-              <button className="btn btn-primary">Create New Link</button>
-            </Link>
-          </div>
-        </div>
-      </div>
+        {/* Create New Link Section */}
+        <Box sx={{ mt: 4 }}>
+          <Card sx={{ boxShadow: 6, borderRadius: 2 }}>
+            <CardContent sx={{ textAlign: "center" }}>
+              <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                Ready to shorten a new link?
+              </Typography>
+              <Typography variant="body1" color="textSecondary" sx={{ mb: 2 }}>
+                Generate branded short links and track performance instantly.
+              </Typography>
+              <Link to="/shorten-url">
+                <Button variant="contained" color="primary" sx={{ px: 4, py: 1 }}>
+                  Create New Link
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </Box>
+      </Box>
       <Footer />
     </>
   );

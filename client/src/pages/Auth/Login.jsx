@@ -1,8 +1,27 @@
-import React, { useState } from "react";
-import axios from "axios";
-import "./index.css";
-import API from "../../api/api";
+import { Box, Button, CircularProgress, TextField, Typography } from "@mui/material";
+import { styled } from "@mui/system";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import API from "../../api/api";
+
+// Create a styled component for the gradient background
+const GradientBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100vh",
+  background: "linear-gradient(135deg, #6a0dad, #9b4dca)", // Purple gradient
+  padding: theme.spacing(4),
+}));
+
+const LoginBox = styled(Box)(({ theme }) => ({
+  backgroundColor: "#fff",
+  padding: theme.spacing(4),
+  borderRadius: "8px",
+  boxShadow: theme.shadows[5],
+  maxWidth: "400px",
+  width: "100%",
+}));
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -27,55 +46,55 @@ const Login = () => {
   };
 
   return (
-    <div
-      className="login-container card shadow mx-auto my-5 p-4"
-      style={{ maxWidth: 400 }}
-    >
-      <h2 className="text-center mb-4">Login</h2>
-      <form className="login-form" onSubmit={handleLogin} autoComplete="off">
-        <div className="form-group mb-3">
-          <label htmlFor="username" className="form-label">
-            Username
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="username"
+    <Box sx={{ minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <LoginBox>
+        <Typography variant="h5" align="center" gutterBottom>
+          Login
+        </Typography>
+        <form onSubmit={handleLogin} autoComplete="off">
+          <TextField
+            label="Username"
+            variant="outlined"
+            fullWidth
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            margin="normal"
             required
             autoFocus
           />
-        </div>
-        <div className="form-group mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
+          <TextField
+            label="Password"
             type="password"
-            className="form-control"
-            id="password"
+            variant="outlined"
+            fullWidth
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            margin="normal"
             required
           />
-        </div>
-        {error && (
-          <div className="alert alert-danger text-center py-2">{error}</div>
-        )}
-        <button
-          type="submit"
-          className="btn btn-primary w-100"
-          disabled={loading}
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
-      <div className="text-center mt-3">
-        <span>Don't have an account? </span>
-        <Link to="/register">Register</Link>
-      </div>
-    </div>
+          {error && (
+            <Typography color="error" align="center" variant="body2" marginTop={2}>
+              {error}
+            </Typography>
+          )}
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            disabled={loading}
+            sx={{ marginTop: 2 }}
+          >
+            {loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
+          </Button>
+        </form>
+        <Box textAlign="center" marginTop={2}>
+          <Typography variant="body2">
+            Don't have an account? <Link to="/register">Register</Link>
+          </Typography>
+        </Box>
+      </LoginBox>
+    </Box>
   );
 };
 

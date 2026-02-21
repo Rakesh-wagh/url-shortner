@@ -1,6 +1,7 @@
+import { Box, Button, CircularProgress, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import API from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import API from "../../api/api";
 
 const Shorten = () => {
   const navigate = useNavigate();
@@ -25,47 +26,53 @@ const Shorten = () => {
   };
 
   return (
-    <div className="row">
-      <div className="col-md-8">
-        <h2>Create a Short Link</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="longUrl" className="form-label">
-              Enter your long URL
-            </label>
-            <input
-              type="url"
-              className="form-control"
-              id="longUrl"
-              name="longUrl"
-              placeholder="https://example.com/my-long-url"
-              required
-            />
-          </div>
+    <Box sx={{ px: 4 }}>
+      <Typography variant="h5" sx={{ marginBottom: 2 }}>
+        Create a Short Link
+      </Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={8}>
+          <form onSubmit={handleSubmit}>
+            <Box sx={{ marginBottom: 2 }}>
+              <TextField
+                fullWidth
+                label="Enter your long URL"
+                id="longUrl"
+                name="longUrl"
+                placeholder="https://example.com/my-long-url"
+                required
+                variant="outlined"
+              />
+            </Box>
 
-          <div className="mb-3">
-            <label htmlFor="customCode" className="form-label">
-              Custom short code (optional)
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="customCode"
-              name="customCode"
-              placeholder="e.g. my-custom-link"
-            />
-            <small className="text-muted">
-              Leave blank to auto-generate a code.
-            </small>
-          </div>
+            <Box sx={{ marginBottom: 2 }}>
+              <TextField
+                fullWidth
+                label="Custom short code (optional)"
+                id="customCode"
+                name="customCode"
+                placeholder="e.g. my-custom-link"
+                variant="outlined"
+              />
+              <Typography variant="body2" color="textSecondary" sx={{ marginTop: 1 }}>
+                Leave blank to auto-generate a code.
+              </Typography>
+            </Box>
 
-          <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? "Creating..." : "Get your Short Link"}{" "}
-            <span className="ms-2">&rarr;</span>
-          </button>
-        </form>
-      </div>
-    </div>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              disabled={loading}
+              sx={{ padding: "12px", marginTop: 2 }}
+            >
+              {loading ? <CircularProgress size={24} color="inherit" /> : "Get your Short Link"}
+            </Button>
+          </form>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 

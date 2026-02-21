@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import API from "../../api/api";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
+import { Box, Button, CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Alert } from "@mui/material";
 
 const UrlList = () => {
   const [urls, setUrls] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  const server_url = process.env.Server_URL;
+  const server_url = import.meta.env.VITE_SERVER_URL;
 
   const fetchUrls = async () => {
     try {
@@ -20,6 +20,7 @@ const UrlList = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchUrls();
   }, []);
@@ -33,63 +34,72 @@ const UrlList = () => {
     }
   };
 
-  if (loading) return <div className="text-center my-5">Loading...</div>;
+  if (loading) return <Box sx={{ display: "flex", justifyContent: "center", marginTop: 5 }}><CircularProgress /></Box>;
   if (error)
-    return <div className="alert alert-danger text-center my-5">{error}</div>;
+    return (
+      <Box sx={{ marginTop: 5 }}>
+        <Alert severity="error">{error}</Alert>
+      </Box>
+    );
 
   return (
     <>
       <Navbar />
-      <div className="container mt-4">
-        <div className="table-responsive">
-          <table className="table table-bordered table-hover align-middle">
-            <thead className="table-light">
-              <tr>
-                <th>Shorten Url</th>
-                <th>Clicks</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
+      <Box sx={{px: 2, marginTop: 3}}>
+        <Typography variant="h5" gutterBottom>
+          Your Shortened URLs
+        </Typography>
+
+        <TableContainer>
+          <Table sx={{ minWidth: 650 }} aria-label="shortened URLs table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Shorten Url</TableCell>
+                <TableCell>Clicks</TableCell>
+                <TableCell>Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
               {urls.length === 0 ? (
-                <tr>
-                  <td colSpan="4" className="text-center">
+                <TableRow>
+                  <TableCell colSpan={3} align="center">
                     No URLs found.
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ) : (
                 urls.map((url) => (
-                  <tr key={url.id}>
-                    <td>
+                  <TableRow key={url.id}>
+                    <TableCell>
                       <a
                         href={`${server_url}/urls/${url.short_code}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary"
                         style={{
-                          cursor: "pointer",
+                          color: "#1976d2", // MUI primary color
                           textDecoration: "underline",
                         }}
                       >
                         {`${server_url}/urls/${url.short_code}`}
                       </a>
-                    </td>
-                    <td>{url.clicks}</td>
-                    <td>
-                      <button
-                        className="btn btn-danger btn-sm"
+                    </TableCell>
+                    <TableCell>{url.clicks}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        size="small"
                         onClick={() => handleDelete(url.short_code)}
                       >
                         Delete
-                      </button>
-                    </td>
-                  </tr>
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 ))
               )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
       <Footer />
     </>
   );

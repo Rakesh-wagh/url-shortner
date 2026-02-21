@@ -1,29 +1,32 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./Navbar.css";
+import { AppBar, Toolbar, Typography, Button, Box, Link as MUILink } from "@mui/material";
 import API from "../../api/api";
 
 const Navbar = () => {
   const [username, setUsername] = useState(null);
   const navigate = useNavigate();
 
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
-    try {
-      if (token) {
-        const user = API.get("/urls/me");
-        user
-          .then((response) => {
-            setUsername(response.data.username);
-          })
-          .catch((error) => {
+    if (token) {
+      API.get("/urls/me")
+        .then((response) => {
+          setUsername(response.data.username);
+        })
+        .catch((error) => {
+          // If the error response status is 401, redirect to the login page
+          if (error.response && error.response.status === 401) {
+            // Clear the token from localStorage and navigate to login
+            localStorage.removeItem("token");
+            navigate("/login");
+          } else {
             console.error("Error in getting user data:", error);
-          });
-      }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
+          }
+        });
     }
-  }, []);
+  }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -31,41 +34,49 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2 px-4">
-      <div className="container-fluid d-flex align-items-center justify-content-between">
-        <div className="d-flex align-items-center">
-          <Link
-            to="/"
-            className="navbar-brand fw-bold fs-4 d-flex align-items-center me-3"
-          >
-            URL Shortener
-          </Link>
+    <AppBar position="sticky" sx={{ backgroundColor: "white", boxShadow: 3 }}>
+      <Toolbar sx={{ justifyContent: "space-between", padding: "0 20px" }}>
+        {/* Left Section - Brand and Navigation Links */}
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <MUILink component={Link} to="/" sx={{ textDecoration: "none", color: "primary.main" }}>
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              URL Shortener
+            </Typography>
+          </MUILink>
+
           {username && (
-            <>
-              <Link to="/shorten-url" className="nav-link ms-4 fw-semibold">
-                Shorten URL
-              </Link>
-              <Link to="/urls" className="nav-link ms-4 fw-semibold">
-                My URLs
-              </Link>
-            </>
+            <Box sx={{ display: "flex", marginLeft: 4 }}>
+              <MUILink component={Link} to="/shorten-url" sx={{ textDecoration: "none", color: "text.primary", marginRight: 2 }}>
+                <Button sx={{ color: "text.primary" }}>Shorten URL</Button>
+              </MUILink>
+              <MUILink component={Link} to="/urls" sx={{ textDecoration: "none", color: "text.primary" }}>
+                <Button sx={{ color: "text.primary" }}>My URLs</Button>
+              </MUILink>
+            </Box>
           )}
-        </div>
-        <div className="d-flex align-items-center">
+        </Box>
+
+        {/* Right Section - Username and Logout */}
+        <Box sx={{ display: "flex", alignItems: "center" }}>
           {username && (
             <>
-              <span className="me-3 fw-semibold text-primary">{username}</span>
-              <button
-                className="btn btn-outline-danger btn-sm px-3"
+              <Typography variant="body2" sx={{ marginRight: 3, color: "text.primary", fontWeight: "bold" }}>
+                {username}
+              </Typography>
+              <Button
+                variant="outlined"
+                color="error"
+                size="small"
+                sx={{ paddingX: 3 }}
                 onClick={handleLogout}
               >
                 Logout
-              </button>
+              </Button>
             </>
           )}
-        </div>
-      </div>
-    </nav>
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 };
 

@@ -1,7 +1,27 @@
-import React, { useState } from "react";
-import "./index.css";
-import API from "../../api/api";
+import { Box, Button, CircularProgress, TextField, Typography } from "@mui/material";
+import { styled } from "@mui/system";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import API from "../../api/api";
+
+// Create a styled component for the gradient background
+const GradientBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100vh",
+  background: "linear-gradient(135deg, #6a0dad, #9b4dca)", // Purple gradient
+  padding: theme.spacing(4),
+}));
+
+const RegisterBox = styled(Box)(({ theme }) => ({
+  backgroundColor: "#fff",
+  padding: theme.spacing(4),
+  borderRadius: "8px",
+  boxShadow: theme.shadows[5],
+  maxWidth: "400px",
+  width: "100%",
+}));
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -35,71 +55,70 @@ const Register = () => {
   };
 
   return (
-    <div
-      className="login-container card shadow mx-auto my-5 p-4"
-      style={{ maxWidth: 400 }}
-    >
-      <h2 className="text-center mb-4">Register</h2>
-      <form className="login-form" onSubmit={handleRegister} autoComplete="off">
-        <div className="form-group mb-3">
-          <label htmlFor="username" className="form-label">
-            Username
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="username"
+    <Box sx={{ minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <RegisterBox>
+        <Typography variant="h5" align="center" gutterBottom>
+          Register
+        </Typography>
+        <form onSubmit={handleRegister} autoComplete="off">
+          <TextField
+            label="Username"
+            variant="outlined"
+            fullWidth
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            margin="normal"
             required
             autoFocus
           />
-        </div>
-        <div className="form-group mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input
+          <TextField
+            label="Email"
             type="email"
-            className="form-control"
-            id="email"
+            variant="outlined"
+            fullWidth
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            margin="normal"
             required
           />
-        </div>
-        <div className="form-group mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
+          <TextField
+            label="Password"
             type="password"
-            className="form-control"
-            id="password"
+            variant="outlined"
+            fullWidth
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            margin="normal"
             required
           />
-        </div>
-        {error && (
-          <div className="alert alert-danger text-center py-2">{error}</div>
-        )}
-        {success && (
-          <div className="alert alert-success text-center py-2">{success}</div>
-        )}
-        <button
-          type="submit"
-          className="btn btn-primary w-100"
-          disabled={loading}
-        >
-          {loading ? "Registering..." : "Register"}
-        </button>
-      </form>
-      <div className="text-center mt-3">
-        <span>Already have an account? </span>
-        <Link to="/login">Login</Link>
-      </div>
-    </div>
+          {error && (
+            <Typography color="error" align="center" variant="body2" marginTop={2}>
+              {error}
+            </Typography>
+          )}
+          {success && (
+            <Typography color="success.main" align="center" variant="body2" marginTop={2}>
+              {success}
+            </Typography>
+          )}
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            disabled={loading}
+            sx={{ marginTop: 2 }}
+          >
+            {loading ? <CircularProgress size={24} color="inherit" /> : "Register"}
+          </Button>
+        </form>
+        <Box textAlign="center" marginTop={2}>
+          <Typography variant="body2">
+            Already have an account? <Link to="/login">Login</Link>
+          </Typography>
+        </Box>
+      </RegisterBox>
+    </Box>
   );
 };
 

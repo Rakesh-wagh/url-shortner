@@ -3,31 +3,37 @@ import QRCodeSection from "./QRCodeSection";
 import Shorten from "./Shorten";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+import { Box, Button, Tabs, Tab, Typography } from "@mui/material";
 
 const ShortenUrl = () => {
   const [activeTab, setActiveTab] = useState("short");
 
+  const handleTabChange = (event, newTab) => {
+    setActiveTab(newTab);
+  };
+
   return (
     <>
       <Navbar />
-      <div className="container py-5">
-        <div className="d-flex mb-4">
-          <button
-            className={`btn me-2 ${activeTab === "short" ? "btn-primary" : "btn-outline-primary"}`}
-            onClick={() => setActiveTab("short")}
-          >
-            Short Link
-          </button>
-          <button
-            className={`btn ${activeTab === "qr" ? "btn-primary" : "btn-outline-primary"}`}
-            onClick={() => setActiveTab("qr")}
-          >
-            QR Code
-          </button>
-        </div>
+      <Box sx={{ padding: 5 }}>
+        {/* Tab Navigation */}
+        <Tabs
+          value={activeTab}
+          onChange={handleTabChange}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="standard"
+          sx={{ marginBottom: 4 }}
+        >
+          <Tab label="Short Link" value="short" />
+          <Tab label="QR Code" value="qr" />
+        </Tabs>
 
-        {activeTab === "qr" ? <QRCodeSection /> : <Shorten />}
-      </div>
+        {/* Active Tab Content */}
+        <Box sx={{ padding: 3 }}>
+          {activeTab === "qr" ? <QRCodeSection /> : <Shorten />}
+        </Box>
+      </Box>
       <Footer />
     </>
   );

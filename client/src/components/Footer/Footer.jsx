@@ -1,14 +1,14 @@
 import React from "react";
-import "./Footer.css";
+import { Box, Typography, Paper } from "@mui/material";
 
 const Footer = () => (
-  <footer className="footer bg-light text-center py-3 mt-auto border-top">
-    <div className="container">
-      <span className="text-muted">
+  <Paper sx={{ mt: "auto", py: 2, backgroundColor: "background.paper", boxShadow: 1 }}>
+    <Box sx={{ textAlign: "center" }}>
+      <Typography variant="body2" color="textSecondary">
         &copy; {new Date().getFullYear()} All rights reserved.
-      </span>
-    </div>
-  </footer>
+      </Typography>
+    </Box>
+  </Paper>
 );
 
 export default Footer;
